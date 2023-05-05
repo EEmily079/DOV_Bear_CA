@@ -34,6 +34,14 @@ jobs:
             {
               "blocks": [
                 {
+                  "type": "header",
+                  "text": {
+                    "type": "plain_text",
+                    "text": "DipSA 56 CI/CD Submission",
+                    "emoji": true
+                  }
+                },
+                {
                   "type": "section",
                   "fields": [
                     {
@@ -53,14 +61,6 @@ jobs:
                       "text": "Repository:\n${{ github.event.repository.html_url }}"
                     }
                   ]
-                },
-                {
-                  "type": "header",
-                  "text": {
-                    "type": "plain_text",
-                    "text": "DipSA 56 CI/CD Submission",
-                    "emoji": true
-                  }
                 },
                 {
                   "type": "section",
