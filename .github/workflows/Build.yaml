@@ -4,83 +4,83 @@ on:
     branches:
       - 'release/v*.*'
 jobs:
-  build-and-deploy:
+   build-and-deploy:
       runs-on: ubuntu-latest
-      if: '!contains(github.event.head_commit.message,"#NORUN")'
+      if: contains(github.event.head_commit.message, '#NORUN') != true
       steps:
-       - name: checkout version 3
-         uses: actions/checkout@v3  
-      
-       - name: install note 
-         uses: actions/setup-node@v3
-         with:
-            node-version: 16
+         - name: checkout version 3
+           uses: actions/checkout@v3  
           
-       - name: installing for railway 
-         run: npm i -g @railway/cli
+         - name: install note 
+           uses: actions/setup-node@v3
+           with:
+              node-version: 16
+                  
+         - name: installing for railway 
+           run: npm i -g @railway/cli
 
-       - name: deploy for railwayup
-         run: railway up
-         env:
-           RAILWAY_TOKEN: ${{ secrets.PROJECT_TOKEN }}
+         - name: deploy for railwayup
+           run: railway up
+           env:
+              RAILWAY_TOKEN: ${{ secrets.PROJECT_TOKEN }}
 
-       - name: sending message to slack
-         id: slack
-         uses: slackapi/slack-github-action@v1.23.0
-         env: 
-            SLACK_WEBHOOK_URL: ${{ secrets.SLACK_LINK }}
-            SLACK_WEBHOOK_TYPE: INCOMING_WEBHOOK
-         with:
-          payload: |
-            {
-              "blocks": [
-                {
-                  "type": "header",
-                  "text": {
-                    "type": "plain_text",
-                    "text": "DipSA 56 CI/CD Submission",
-                    "emoji": true
-                  }
-                },
-                {
-                  "type": "section",
-                  "fields": [
-                    {
-                      "type": "mrkdwn",
-                      "text": "Name:\nHninn Ei Khaing"
-                    },
-                    {
-                      "type": "mrkdwn",
-                      "text": "Email:\ne1114079@u.nus.edu"
-                    },
-                    {
-                      "type": "mrkdwn",
-                      "text": "Matriculation:\nA0269740W"
-                    },
-                    {
-                      "type": "mrkdwn",
-                      "text": "Repository:\n${{ github.event.repository.html_url }}"
-                    }
-                  ]
-                },
-                {
-                  "type": "section",
-                  "text": {
-                    "type": "mrkdwn",
-                    "text": "https://${{ secrets.RAILWAY_LINK }}.up.railway.app/"
-                  },
-                  "accessory": {
-                    "type": "button",
+         - name: sending message to slack
+           id: slack
+           uses: slackapi/slack-github-action@v1.23.0
+           env: 
+              SLACK_WEBHOOK_URL: ${{ secrets.SLACK_LINK }}
+              SLACK_WEBHOOK_TYPE: INCOMING_WEBHOOK
+           with:
+            payload: |
+              {
+                "blocks": [
+                  {
+                    "type": "header",
                     "text": {
                       "type": "plain_text",
-                      "text": "GO",
+                      "text": "DipSA 56 CI/CD Submission",
                       "emoji": true
+                    }
+                  },
+                  {
+                    "type": "section",
+                    "fields": [
+                      {
+                        "type": "mrkdwn",
+                        "text": "Name:\nHninn Ei Khaing"
+                      },
+                      {
+                        "type": "mrkdwn",
+                        "text": "Email:\ne1114079@u.nus.edu"
+                      },
+                      {
+                        "type": "mrkdwn",
+                        "text": "Matriculation:\nA0269740W"
+                      },
+                      {
+                        "type": "mrkdwn",
+                        "text": "Repository:\n${{ github.event.repository.html_url }}"
+                      }
+                    ]
+                  },
+                  {
+                    "type": "section",
+                    "text": {
+                      "type": "mrkdwn",
+                      "text": "https://${{ secrets.RAILWAY_LINK }}.up.railway.app/"
                     },
-                    "url": "https://${{ secrets.RAILWAY_LINK }}.up.railway.app"
+                    "accessory": {
+                      "type": "button",
+                      "text": {
+                        "type": "plain_text",
+                        "text": "GO",
+                        "emoji": true
+                      },
+                      "url": "https://${{ secrets.RAILWAY_LINK }}.up.railway.app"
+                    }
                   }
-                }
-              ]
-            }
+                ]
+              }
 
       
 
