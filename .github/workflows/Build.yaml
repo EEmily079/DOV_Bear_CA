@@ -1,8 +1,7 @@
 name: my assignment
 on:
   push:
-    branches:
-      - 'release/v*.*'
+    branches: ['release/v*.*','!release/v*.*.*','!feature-*']
 jobs:
    build-and-deploy:
       runs-on: ubuntu-latest
