@@ -17,10 +17,10 @@ jobs:
       - name: railway setup
       - uses: MadeByThePinsHub/setup-railway-cli-action@v0.1.0 
       - name: railway deploy using with
-      - uses: bervProject/railway-deploy@main
-        with:
-          railway_token: ${{secrets.TOKEN_RAILWAY_WITH }}
-          
+      - run: railway up
+        env:
+          RAILWAY_TOKEN: ${{secrets.TOKEN_RAILWAY_WITH }}
+
 
         
        
